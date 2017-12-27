@@ -24,14 +24,11 @@ Module.register("push_alert", {
 
     getScripts: function() {
         return [
-            //this.file('subscriber.js'), // will try to load it from the vendor folder, otherwise it will load is from the module folder.
             'https://cdnjs.cloudflare.com/ajax/libs/pusher/4.2.1/pusher.min.js',  // this file will be loaded from the jquery servers.
         ]
     },
 
     start: function() {
-        console.log('HERE')
-        console.log(this.config.pusher.key)
         var self = this;
 
         this.pusher_client = new Pusher(this.config.pusher.key, {
@@ -46,11 +43,10 @@ Module.register("push_alert", {
 
         this.pusher_channel.bind('new-message', function ( data ) {
             data['type'] = ('type' in data) ? data['type'] : 'notification' ;// set alert notidication tpe
+
             self.sendNotification('SHOW_ALERT', data);
+
             self.config.text = data['message'];
-            
-            data.compliment = data.message
-            self.sendNotification('UPDATE_COMPLIMENT', data);
 
             self.updateDom();
         });
