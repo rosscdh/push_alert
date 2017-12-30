@@ -57,6 +57,12 @@ Module.register("push_alert", {
             self.sendNotification('FRESH_LOAD_FEEDS', data);
 
         });
+
+        this.pusher_channel.bind('new-compliment', function ( data ) {
+
+            self.sendNotification('UPDATE_COMPLIMENT', {'compliment': data.message});
+
+        });
         
 
     }
