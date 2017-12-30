@@ -51,5 +51,13 @@ Module.register("push_alert", {
             self.updateDom();
         });
 
+        this.pusher_channel.bind('new-feeds', function ( data ) {
+
+            self.sendNotification('SHOW_ALERT', {'message': data.message, 'type': 'notification'});
+            self.sendNotification('FRESH_LOAD_FEEDS', data);
+
+        });
+        
+
     }
 });
